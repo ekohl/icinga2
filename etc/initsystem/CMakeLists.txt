@@ -51,6 +51,13 @@ if(NOT WIN32)
   endif()
 
   if (USE_SYSTEMD OR INSTALL_SYSTEMD_SERVICE_AND_INITSCRIPT)
+    configure_file(icinga2.tmpfiles.cmake ${CMAKE_CURRENT_BINARY_DIR}/initsystem/tmpfiles.service @ONLY)
+    install(
+      FILES ${CMAKE_CURRENT_BINARY_DIR}/initsystem/icinga2.tmpfiles
+      DESTINATION ${DESTDIR}/usr/lib/tmpfiles.d/icinga2.conf
+      PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ
+    )
+
     configure_file(icinga2.service.cmake ${CMAKE_CURRENT_BINARY_DIR}/initsystem/icinga2.service @ONLY)
     install(
       FILES ${CMAKE_CURRENT_BINARY_DIR}/initsystem/icinga2.service
